@@ -13,6 +13,10 @@ function Horn(instancedHorn){
 }
 console.log(uniqueKeywords)
 
+$('.pagination').click(function(){
+  page = $(this).attr(${page}); renderJSON(page, defaultSort);
+});
+
 //render prototype
 Horn.prototype.render = function (){
   let template = $('#photo-template').html();
@@ -34,6 +38,27 @@ const filterKeywords = () => {
   })
 }
 
+function addDropDownMenu(){
+  const $dropdown = $('select');
+  keywordsArray.forEach(keywords => {
+      console.log(keywords)
+      const $newOption = $(`<option value = ‘${keywords}’>${keywords}</option>`);
+      $dropdown.append($newOption);
+  });
+};
+
+let userSelection = () => {
+  $('select').on('change', function() {
+      let selected = this.value;
+      console.log('value',selected);
+      $('section').hide();
+      hornsArray.forEach(image => {
+          if(selected === image.keyword) {
+              var keyword = selected;
+              $("." + keyword).show();
+          };
+      });
+  });
 
 
 // ajax is calling our json file
@@ -44,8 +69,6 @@ $.ajax(`data/page-1.json`, {METHOD: 'GET', DATATYPE: 'JSON'})
       console.log(horn);
     })
     filterKeywords();
-})
-
-// FEATURE 2
-// Creating a `select` element with unique `option` elements that are extracted dynamically from the JSON file. One for each keyword
-// Event handler to respond when users chooses an option from the menu. Hide all images, then show images that match keyword
+    addDropDownMenu();
+    userSelection();
+});
