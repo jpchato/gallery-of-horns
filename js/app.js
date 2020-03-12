@@ -1,8 +1,10 @@
 'use strict';
 // constructor function
 // FEATURE 1
+
 let hornCollection = [];
 let uniqueKeywords = [];
+
 function Horn(instancedHorn){
   this.image_url = instancedHorn.image_url;
   this.title = instancedHorn.title;
@@ -13,11 +15,13 @@ function Horn(instancedHorn){
 }
 console.log(uniqueKeywords)
 
-$('.pagination').click(function(){
-  page = $(this).attr(${page}); renderJSON(page, defaultSort);
-});
+// $('.pagination').click(function(){
+//   let page = 
+//   page = $(this).attr(${page}); renderJSON(page, defaultSort);
+// });
 
 //render prototype
+
 Horn.prototype.render = function (){
   let template = $('#photo-template').html();
   let $section = $('<section></section>');
@@ -40,7 +44,7 @@ const filterKeywords = () => {
 
 function addDropDownMenu(){
   const $dropdown = $('select');
-  keywordsArray.forEach(keywords => {
+  uniqueKeywords.forEach(keywords => {
       console.log(keywords)
       const $newOption = $(`<option value = ‘${keywords}’>${keywords}</option>`);
       $dropdown.append($newOption);
@@ -52,14 +56,14 @@ let userSelection = () => {
       let selected = this.value;
       console.log('value',selected);
       $('section').hide();
-      hornsArray.forEach(image => {
+      hornCollection.forEach(image => {
           if(selected === image.keyword) {
               var keyword = selected;
               $("." + keyword).show();
           };
       });
   });
-
+}
 
 // ajax is calling our json file
 $.ajax(`data/page-1.json`, {METHOD: 'GET', DATATYPE: 'JSON'})
