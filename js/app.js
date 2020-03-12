@@ -57,7 +57,7 @@ let userSelection = () => {
       console.log('value',selected);
       $('section').hide();
       hornCollection.forEach(image => {
-          if(selected === image.keyword) {
+          if(selected === image.uniqueKeywords) {
               var keyword = selected;
               $("." + keyword).show();
           };
