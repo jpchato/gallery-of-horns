@@ -32,3 +32,14 @@
 * Finish time: 
 
 * Actual time needed to complete: 
+
+## Feature 1: Pagination
+* Number and name of feature: Pagination
+
+* Estimate of time needed to complete: 2 hours
+
+* Start time: 11am
+
+* Finish time: 
+
+* Actual time needed to complete: 
