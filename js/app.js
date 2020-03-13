@@ -4,8 +4,11 @@
 
 let hornCollection = [];
 let uniqueKeywords = [];
+let $list = $("#list");
+let template = $('#horns-template').html();
+let renderTemplate = Handlebars.compile(template);
 
-function Horn(instancedHorn){
+function Horn(instancedHorn) {
   this.image_url = instancedHorn.image_url;
   this.title = instancedHorn.title;
   this.description = instancedHorn.description;
@@ -13,66 +16,54 @@ function Horn(instancedHorn){
   this.horns = instancedHorn.horns;
   hornCollection.push(this);
 }
-console.log(uniqueKeywords)
-
 // $('.pagination').click(function(){
-//   let page = 
+//   let page =
 //   page = $(this).attr(${page}); renderJSON(page, defaultSort);
 // });
 
 //render prototype
 
-Horn.prototype.render = function (){
-  let template = $('#photo-template').html();
-  let $section = $('<section></section>');
-  $section.html(template);
-  $section.find('h2').text(this.title);
-  // $section.find('h3').text(this.)
-  $section.find('p').text(this.description);
-  $section.find('img').attr('src', this.image_url)
-  $('main').append($section)
-  // create a piece to add to the section that is not included in the html. Need piece for horns, keyword
+Horn.prototype.render = function () {
+  let html = renderTemplate(this);
+  $list.append(html)
 }
 
 const filterKeywords = () => {
-  hornCollection.forEach(obj =>{
-    if (!uniqueKeywords.includes(obj.keyword)){
+  hornCollection.forEach(obj => {
+    if (!uniqueKeywords.includes(obj.keyword)) {
       uniqueKeywords.push(obj.keyword)
     }
   })
 }
 
-function addDropDownMenu(){
+function addDropDownMenu() {
   const $dropdown = $('select');
-  uniqueKeywords.forEach(keywords => {
-      console.log(keywords)
-      const $newOption = $(`<option value = ‘${keywords}’>${keywords}</option>`);
-      $dropdown.append($newOption);
+  uniqueKeywords.sort().forEach(keywords => {
+    const $newOption = $(`<option value = ‘${keywords}’>${keywords}</option>`);
+    $dropdown.append($newOption);
   });
 };
 
 let userSelection = () => {
-  $('select').on('change', function() {
-      let selected = this.value;
-      console.log('value',selected);
-      $('section').hide();
-      hornCollection.forEach(image => {
-          if(selected === image.uniqueKeywords) {
-              var keyword = selected;
-              $("." + keyword).show();
-          };
-      });
+  $('select').on('change', function () {
+    let selected = this.value;
+    $('section').hide(); /// Hide anything that's not got the class = section
+    hornCollection.forEach(image => {
+      if (selected === image.uniqueKeywords) {
+        var keyword = selected;
+        $("." + keyword).show();
+      };
+    });
   });
 }
 
 // ajax is calling our json file
-$.ajax(`data/page-1.json`, {METHOD: 'GET', DATATYPE: 'JSON'})
+$.ajax(`data/page-1.json`, { METHOD: 'GET', DATATYPE: 'JSON' })
   .then(data => {
     data.forEach(horn => {
       new Horn(horn).render();
-      console.log(horn);
     })
     filterKeywords();
     addDropDownMenu();
     userSelection();
-});
+  });

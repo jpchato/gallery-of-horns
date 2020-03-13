@@ -1,23 +1,26 @@
-h1{
+h1 {
     text-align: center;
 }
 
-section img{
-    height: 200px;
+#photo-template img {
+    max-width: 100%;
     border-radius: 50px;
 }
 
 section {
-    margin: auto;
-    height: 450px;
-    width: 450px;
-    float: left;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 #photo-template {
-    display: none;
+    border: 1px solid #ccc;
+    margin: 1rem;
+    padding: 2rem;
+    max-width: 350px;
 }
 
-footer{
+footer {
     clear: both;
 }
